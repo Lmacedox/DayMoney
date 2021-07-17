@@ -4,6 +4,7 @@ export const GlobalStyle = createGlobalStyle`
     :root{
         --background: #F2F0F5;
         --red: #E52E4D;
+        --green: #33CC95;
         --blue: #5429CC;
 
         --blue-light: #6833FF;
@@ -49,6 +50,12 @@ export const GlobalStyle = createGlobalStyle`
 
     button{
         cursor: pointer;
+
+        transition: filter 0.5s;
+       
+       &:hover{
+           filter: brightness(0.6)
+       }
     }
 
     /* TUDO QUE ESTIVER DESABILITADO */
