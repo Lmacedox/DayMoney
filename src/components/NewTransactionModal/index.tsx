@@ -4,6 +4,7 @@ import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
 import { FormEvent, useState } from 'react'
+import { api } from '../../services/api'
 
 
 interface NewTransactionModalProps{
@@ -20,10 +21,22 @@ export function NewTransactionModal({isOpen, onRequestClose}:NewTransactionModal
   const [type, setType] = useState('deposit');
   
 
-  function handlwCreateNewTransaction(event: FormEvent){
+  function handleCreateNewTransaction(event: FormEvent){
     // PREVENIR O FUNCIONAMENTO PADRÃO
     event.preventDefault()
+
+    const data = {
+      title,
+      value,
+      category,
+      type,
+    }
+
+    // ROTA / DADOS
+    api.post('/transactions', data)
   }
+
+
 
   return(
     <Modal
@@ -41,7 +54,7 @@ export function NewTransactionModal({isOpen, onRequestClose}:NewTransactionModal
         alt="Botao de Fechar o Modal"
       />
     </button>
-    <Container onSubmit={handlwCreateNewTransaction}>
+    <Container onSubmit={handleCreateNewTransaction}>
     <h2>Cadastrar Transação</h2>
 
     <input
@@ -88,7 +101,7 @@ export function NewTransactionModal({isOpen, onRequestClose}:NewTransactionModal
       onChange={event => setCategory(event.target.value)}
     />
 
-    <button type="submit">
+    <button type="submit" onClick={onRequestClose}>
       Cadastrar 
     </button>
 
