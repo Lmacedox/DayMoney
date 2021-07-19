@@ -5,9 +5,9 @@ import Modal from 'react-modal'
 
 interface HeaderProps{
 	// FUNÇÃO TIPADA
-	onOpenNewTransactionMoldal: () => void;
+	onOpenNewTransactionModal: () => void;
 }
-export function Header({ onOpenNewTransactionMoldal }: HeaderProps){
+export function Header({ onOpenNewTransactionModal }: HeaderProps){
 
    return(
        <Container>
@@ -15,7 +15,7 @@ export function Header({ onOpenNewTransactionMoldal }: HeaderProps){
             <img src={logoImg} alt="dt money" />
             <button 
                 type="button"
-                onClick={onOpenNewTransactionMoldal}
+                onClick={onOpenNewTransactionModal}
             >
                 Nova Transação
             </button>
