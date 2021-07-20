@@ -2,13 +2,29 @@ import { useContext } from 'react';
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
 import totalImg from '../../assets/total.svg'
-import { TransactionsContext } from '../../TransactionsContext';
+import { useTransactions } from '../../hooks/useTransactions';
 import { Container } from "./styles";
 
 export function Summary(){
       // CONSUMINDO CONTEXTO
-      const transactions = useContext(TransactionsContext)
-  
+      // {} -> DESESTRUTURAÇÃO => TIRO APENAS O TRANSACTIONS DE DENTRO DO CONTEXTO
+      const { transactions } = useTransactions();
+
+      // VALORES TOTAIS
+      const summary = transactions.reduce((acc, transaction) => {
+        if(transaction.type == 'deposit'){
+          acc.deposits += transaction.amount
+          acc.total += transaction.amount
+        } else {
+          acc.withdraws += transaction.amount
+          acc.total -= transaction.amount
+        }
+        return acc
+      }, {
+        deposits: 0,
+        withdraws: 0,
+        total: 0,
+      })
 
     return(
      <Container>
@@ -19,7 +35,13 @@ export function Summary(){
            <p>Entradas</p>
            <img src={incomeImg} alt="Entradas" />
          </header>
-         <strong>R$1000,00</strong>
+         <strong>
+          {/* FORMATANDO VALORES COM INTL */}
+            {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+           }).format(summary.deposits)}
+          </strong>
        </div>
        {/* CARD */}
        <div>
@@ -28,7 +50,13 @@ export function Summary(){
            <p>Saídas</p>
            <img src={outcomeImg} alt="Saidas" />
          </header>
-         <strong>- R$500,00</strong>
+         <strong>-
+          {/* FORMATANDO VALORES COM INTL */}
+            {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+           }).format(summary.withdraws)}
+          </strong>
        </div>
        {/* CARD */}
        <div className="highlight-backgroud">
@@ -37,7 +65,13 @@ export function Summary(){
            <p>Total</p> 
            <img src={totalImg} alt="Total" />
          </header>
-         <strong>R$500,00</strong>
+         <strong>
+          {/* FORMATANDO VALORES COM INTL */}
+          {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+           }).format(summary.total)}
+          </strong>
        </div>
      </Container>
     )

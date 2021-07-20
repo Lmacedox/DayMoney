@@ -1,12 +1,13 @@
 import { useContext } from 'react'
-import { TransactionsContext } from "../../TransactionsContext";
+import { useTransactions } from '../../hooks/useTransactions';
 import { Container } from "./styles";
 
 
 
 export function TransactionsTable(){
     // CONSUMINDO CONTEXTO
-    const transactions = useContext(TransactionsContext)
+    // {} -> DESESTRUTURAÇÃO => TIRO APENAS O TRANSACTIONS DE DENTRO DO CONTEXTO
+    const { transactions } = useTransactions();
 
   return(
     <Container>
